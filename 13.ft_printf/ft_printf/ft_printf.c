@@ -6,7 +6,7 @@
 /*   By: seojulee <seojulee@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 18:10:39 by seojulee          #+#    #+#             */
-/*   Updated: 2023/01/26 13:36:23 by seojulee         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:23:05 by seojulee         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ int	specifier_check(va_list ap, int i, char *str)
 	else if (str[i] == 'd' || str[i] == 'i')
 		value = integer(ap);
 	else if (str[i] == 'u')
-		value = unsigned_to_char(ap, 10, 0);
+		value = unsigned_to_string(ap, 10, 0);
 	else if (str[i] == 'x')
-		value = unsigned_to_char(ap, 16, 0);
+		value = unsigned_to_string(ap, 16, 0);
 	else if (str[i] == 'X')
-		value = unsigned_to_char(ap, 16, 1);
+		value = unsigned_to_string(ap, 16, 1);
 	else if (str[i] == '%')
 		value = write(1, "%", 1);
 	else
