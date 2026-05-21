@@ -1,4 +1,4 @@
-# 00 - LaPiscine
+# LaPiscine
 
 ## 개요
 
