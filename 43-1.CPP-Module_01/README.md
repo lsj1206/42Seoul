@@ -8,21 +8,12 @@
 
 ## 과제 요구사항
 
-### Mandatory
-
-- C++98 기준으로 컴파일되어야 하며, `-Wall -Wextra -Werror` 옵션을 통과해야 한다.
-- `ex00`은 `Zombie` class를 만들고, `newZombie`와 `randomChump`를 통해 heap object와 stack object의 차이를 확인한다.
-- `ex01`은 `zombieHorde` 함수에서 `Zombie` 배열을 한 번의 할당으로 생성하고, 사용 후 배열 전체를 해제한다.
-- `ex02`는 같은 문자열을 pointer와 reference가 어떻게 가리키는지 주소와 값을 출력해 비교한다.
-- `ex03`은 `Weapon`, `HumanA`, `HumanB`를 통해 reference member와 pointer member의 차이를 확인한다.
-- `ex04`는 파일을 읽고 문자열을 치환한 뒤 원본을 직접 수정하지 않고 `<filename>.replace` 파일을 생성한다.
-- `ex05`는 `Harl` class에서 level 문자열에 따라 알맞은 member function을 호출한다.
-
 ### C++98과 CPP Module 공통 규칙
 
-- class 이름은 _UpperCamelCase_ 형식으로 작성한다.
-- header는 include guard로 보호하고, template을 제외하면 header 안에 함수 구현을 두지 않는다.
+- C++98 기준으로 컴파일되어야 하며, `-Wall -Wextra -Werror` 옵션을 통과해야 한다.
 - 모든 출력은 표준 출력으로 보내며, 별도 지시가 없으면 개행으로 끝낸다.
+- header는 include guard로 보호하고, template을 제외하면 header 안에 함수 구현을 두지 않는다.
+- class 이름은 _UpperCamelCase_ 형식으로 작성한다.
 - `alloc`, `free`, `printf` 함수를 사용할 수 없다.
 - STL container와 `<algorithm>` header를 사용할 수 없다.
 - `nullptr`는 C++11부터 도입된 키워드이므로 C++98 기준에서는 사용할 수 없다.
@@ -31,6 +22,15 @@
   - `namespace`는 함수, 구조체, 변수 이름이 어느 소속에 속하는지 정해 주는 단위다.
 - `friend` 키워드는 사용할 수 없다.
   - class 간 친구 관계를 만들어 다른 class의 private member에 접근할 수 있게 하는 키워드다.
+
+### Mandatory
+
+- `ex00`은 `Zombie` class를 만들고, `newZombie`와 `randomChump`를 통해 heap object와 stack object의 차이를 확인한다.
+- `ex01`은 `zombieHorde` 함수에서 `Zombie` 배열을 한 번의 할당으로 생성하고, 사용 후 배열 전체를 해제한다.
+- `ex02`는 같은 문자열을 pointer와 reference가 어떻게 가리키는지 주소와 값을 출력해 비교한다.
+- `ex03`은 `Weapon`, `HumanA`, `HumanB`를 통해 reference member와 pointer member의 차이를 확인한다.
+- `ex04`는 파일을 읽고 문자열을 치환한 뒤 원본을 직접 수정하지 않고 `<filename>.replace` 파일을 생성한다.
+- `ex05`는 `Harl` class에서 level 문자열에 따라 알맞은 member function을 호출한다.
 
 ## 개념 정리
 

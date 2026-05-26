@@ -8,19 +8,12 @@
 
 ## 과제 요구사항
 
-### Mandatory
-
-- C++98 기준으로 컴파일되어야 하며, `-Wall -Wextra -Werror` 옵션을 통과해야 한다.
-- `ex00`은 인자로 받은 문자열을 모두 대문자로 변환해 출력하는 `megaphone` 프로그램을 만든다.
-- `ex00`은 인자가 없을 때 정해진 feedback noise 문구를 출력한다.
-- `ex01`은 최대 8개의 연락처를 저장하는 `PhoneBook`과 연락처 정보를 담는 `Contact` class를 구현한다.
-- `ex01`은 `ADD`, `SEARCH`, `EXIT` 명령을 처리하고, 검색 결과를 정해진 폭과 형식으로 출력한다.
-
 ### C++98과 CPP Module 공통 규칙
 
-- class 이름은 _UpperCamelCase_ 형식으로 작성한다.
-- header는 include guard로 보호하고, template을 제외하면 header 안에 함수 구현을 두지 않는다.
+- C++98 기준으로 컴파일되어야 하며, `-Wall -Wextra -Werror` 옵션을 통과해야 한다.
 - 모든 출력은 표준 출력으로 보내며, 별도 지시가 없으면 개행으로 끝낸다.
+- header는 include guard로 보호하고, template을 제외하면 header 안에 함수 구현을 두지 않는다.
+- class 이름은 _UpperCamelCase_ 형식으로 작성한다.
 - `alloc`, `free`, `printf` 함수를 사용할 수 없다.
 - STL container와 `<algorithm>` header를 사용할 수 없다.
 - `nullptr`는 C++11부터 도입된 키워드이므로 C++98 기준에서는 사용할 수 없다.
@@ -29,6 +22,14 @@
   - `namespace`는 함수, 구조체, 변수 이름이 어느 소속에 속하는지 정해 주는 단위다.
 - `friend` 키워드는 사용할 수 없다.
   - class 간 친구 관계를 만들어 다른 class의 private member에 접근할 수 있게 하는 키워드다.
+
+### Mandatory
+
+- C++98 기준으로 컴파일되어야 하며, `-Wall -Wextra -Werror` 옵션을 통과해야 한다.
+- `ex00`은 인자로 받은 문자열을 모두 대문자로 변환해 출력하는 `megaphone` 프로그램을 만든다.
+- `ex00`은 인자가 없을 때 정해진 feedback noise 문구를 출력한다.
+- `ex01`은 최대 8개의 연락처를 저장하는 `PhoneBook`과 연락처 정보를 담는 `Contact` class를 구현한다.
+- `ex01`은 `ADD`, `SEARCH`, `EXIT` 명령을 처리하고, 검색 결과를 정해진 폭과 형식으로 출력한다.
 
 ## 개념 정리
 
