@@ -1,10 +1,10 @@
-# 12 - CPP Module 00
+# CPP Module 00
 
 ## 개요
 
 - CPP Module 00은 C++ 문법과 객체 지향 프로그래밍의 출발점을 다루는 첫 번째 C++ 과제다.
-- C에서 사용하던 절차 중심 흐름을 C++의 `class`, member function, standard stream, access control 중심 구조로 옮겨 보는 데 초점이 있다.
-- 현재 폴더에서는 `megaphone`으로 기본 입출력과 문자열 처리를 연습하고, `PhoneBook`/`Contact`로 객체가 상태와 동작을 함께 갖는 구조를 정리한다.
+- - C에서 익숙한 절차 중심 작성 방식에서, C++의 객체 중심 구조로 전환하는 학습을 한다.
+- `megaphone`으로 기본 입출력과 문자열 처리를 연습하고, `PhoneBook`/`Contact`로 객체가 상태와 동작을 함께 갖는 구조를 정리한다.
 
 ## 과제 요구사항
 

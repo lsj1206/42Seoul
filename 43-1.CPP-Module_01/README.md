@@ -1,10 +1,10 @@
-# 12 - CPP Module 01
+# CPP Module 01
 
 ## 개요
 
 - CPP Module 01은 C++에서 객체의 생성 위치, 생명주기, 참조 방식, 파일 stream, member function pointer를 다루는 과제다.
-- 핵심은 C에서 익숙한 `malloc/free` 흐름을 C++의 `new/delete`, stack/heap object, pointer/reference 관계로 다시 구분하는 것이다.
-- 현재 폴더에서는 `Zombie`, `Weapon`, `FileManager`, `Harl` 구현을 통해 객체가 언제 생성되고 언제 해제되어야 하는지 정리한다.
+- C에서 익숙한 `malloc/free` 흐름을 C++의 `new/delete`, stack/heap object, pointer/reference 관계로 재학습한다.
+- `Zombie`, `Weapon`, `FileManager`, `Harl` 구현을 통해 객체가 언제 생성되고 언제 해제되어야 하는지 정리한다.
 
 ## 과제 요구사항
 
