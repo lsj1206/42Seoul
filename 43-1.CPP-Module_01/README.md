@@ -2,9 +2,9 @@
 
 ## 개요
 
-- CPP Module 01은 C++에서 객체의 생성 위치, 생명주기, 참조 방식, 파일 stream, member function pointer를 다루는 과제다.
+- CPP Module 01은 C++에서 object의 생성 위치, lifetime, 참조 방식, file stream, member function pointer를 다루는 과제다.
 - C에서 익숙한 `malloc/free` 흐름을 C++의 `new/delete`, stack/heap object, pointer/reference 관계로 재학습한다.
-- `Zombie`, `Weapon`, `FileManager`, `Harl` 구현을 통해 객체가 언제 생성되고 언제 해제되어야 하는지 정리한다.
+- `Zombie`, `Weapon`, `FileManager`, `Harl` 구현을 통해 object가 언제 생성되고 언제 해제되어야 하는지 정리한다.
 
 ## 과제 요구사항
 
@@ -32,119 +32,46 @@
 - `ex04`는 파일을 읽고 문자열을 치환한 뒤 원본을 직접 수정하지 않고 `<filename>.replace` 파일을 생성한다.
 - `ex05`는 `Harl` class에서 level 문자열에 따라 알맞은 member function을 호출한다.
 
-## 개념 정리
+## 핵심 메모
 
 ### New & Delete
 
-- `new`는 C++에서 동적 메모리를 할당하고 object의 constructor를 호출한다.
-- `delete`는 object의 destructor를 호출하고 할당된 메모리를 해제한다.
-- C에서는 heap 할당에 `malloc/free`를 사용하지만, C++에서는 `new/delete`가 이에 대응된다.
-- 배열을 동적으로 생성할 때는 `new[]`를 사용하고, 해제할 때는 `delete[]`를 사용한다.
-- 기본 `new`가 실패하면 `std::bad_alloc` 예외가 발생한다.
-- C처럼 null check 방식으로 실패를 다루려면 `new(std::nothrow)` 형태를 사용할 수 있다.
-
-### Heap과 Stack
-
-- heap은 실행 중 원하는 크기의 메모리를 할당할 수 있는 영역이며, 사용자가 직접 할당과 해제를 관리해야 한다.
-- heap에 할당한 object는 필요한 동안 유지할 수 있지만, 해제하지 않으면 memory leak이 발생할 수 있다.
-- stack은 함수 호출과 함께 할당되고, 함수 호출이 끝나면 자동으로 소멸하는 영역이다.
-- stack object는 명시적인 해제가 필요 없지만, 함수 scope를 벗어나면 더 이상 사용할 수 없다.
+- **dynamic memory allocation**: runtime에 사용할 memory 공간을 할당하는 것.
+  - 상황에 따라 원하는 크기만큼의 memory를 heap에 할당한다.
+  - Heap은 사용자가 직접 관리해야 하는 memory 영역이다.
+    - Stack은 compiler에 의해 어느 정도 안정성이 보장된다.
+- `new`는 C++에서 지원하는 dynamic allocation 방식이며, `malloc`에 대응된다.
+- `delete`는 `free`에 대응되며, 할당된 memory를 해제할 때 사용한다.
+- `new`가 실패하면 기본적으로 `std::bad_alloc` 예외가 throw된다.
+  - C에서 사용하는 NULL체크로 예외처리가 불가능하다.
+- try-catch문을 통해서 예외처리할 수 있으며, `new(std::nothrow)`로 선언하면 C와 같은 방식으로(NULL 체크)로 예외처리가 가능하다.
+- `newZombie`는 `new Zombie(name)`으로 heap object를 만들고, 호출한 쪽에서 `delete`로 lifetime을 끝낸다.
+- `randomChump`는 함수 내부 stack object를 만든 뒤 바로 `announce`를 호출한다.
+- `zombieHorde`는 `new(std::nothrow) Zombie[N]`로 배열을 만들고, 호출한 쪽에서 `delete[]`로 해제한다.
 
 ### Pointer와 Reference
 
-- pointer는 다른 변수의 메모리 주소를 가지고 있는 변수다.
-- pointer가 가리키는 값에 접근하려면 `*` operator를 사용해 dereference해야 한다.
-- reference는 이미 존재하는 변수의 alias다.
-- reference는 선언과 동시에 초기화되어야 하며, null 참조가 불가능하고 다른 대상을 다시 가리키도록 재할당할 수 없다.
-- reference는 내부적으로 pointer처럼 object의 주소를 저장하도록 구현될 수 있지만, 사용하는 쪽에서는 이름만으로 접근한다.
+- **pointer**는 다른 변수의 memory address를 가지고 있는 변수다.
+- Pointer가 가리키는 값에 접근하려면 `*` operator를 사용해 dereference해야 한다.
+- **reference**는 이미 존재하는 변수의 alias다.
+- Reference는 선언과 동시에 초기화되어야 하며, null 참조가 불가능하고 다른 대상을 다시 가리키도록 재할당할 수 없다.
+- `ex02`는 같은 문자열에 대해 원본 변수, pointer, reference의 주소와 값을 각각 출력한다.
+- `HumanA`는 생성 시점에 항상 `Weapon`을 받아야 하므로 `Weapon&` reference member를 사용하고, `HumanB`는 weapon이 없을 수 있으므로 `Weapon*` pointer member를 사용한다.
 
-### Member Initializer
+### File Stream과 문자열 치환
 
-- member initializer는 constructor를 통해 구현하며, member variable을 초기화하는 문법이다.
-- const member, reference member, object member, 부모 class member를 초기화할 때 사용할 수 있다.
-- reference member처럼 반드시 생성 시점에 초기화되어야 하는 member에는 member initializer가 필요하다.
-
-## 문제 해결의 핵심
-
-### `ex00` Stack Object와 Heap Object
-
-- `newZombie`는 heap에 `Zombie` object를 만들고 pointer를 반환하므로, 함수 밖에서도 object를 사용할 수 있다.
-- heap object는 더 이상 필요하지 않을 때 호출한 쪽에서 `delete`해야 한다.
-- `randomChump`는 함수 내부 stack에 `Zombie` object를 만들고 바로 `announce`를 호출하므로, 함수가 끝나면 object가 자동으로 소멸한다.
-
-### `ex01` 배열 생명주기
-
-- 여러 `Zombie`를 한 번에 만들려면 `new[]`를 사용해 배열을 할당해야 한다.
-- 배열로 할당한 object는 `delete[]`로 해제해야 각 요소의 destructor 호출과 배열 메모리 해제가 함께 맞는다.
-- `zombieHorde`는 `N`이 유효하지 않거나 할당에 실패한 경우 null pointer를 반환하도록 처리한다.
-
-### `ex02` Pointer와 Reference 비교
-
-- 같은 문자열에 대해 원본 변수, pointer, reference의 주소와 값을 각각 출력한다.
-- pointer는 주소를 저장하고 `*`로 값을 읽지만, reference는 별칭처럼 원본 이름과 같은 방식으로 값을 읽는다.
-- 이 exercise는 pointer와 reference가 같은 object를 가리킬 수 있지만, 선언과 사용 방식이 다르다는 점을 확인하는 용도다.
-
-### `ex03` Reference Member와 Pointer Member
-
-- `HumanA`는 생성 시점에 항상 `Weapon`을 받아야 하므로 `Weapon&` reference member를 사용한다.
-- reference member는 생성과 동시에 초기화되어야 하므로 constructor의 member initializer에서 설정한다.
-- `HumanB`는 weapon이 없을 수 있고 나중에 `setWeapon`으로 받을 수 있으므로 `Weapon*` pointer member를 사용한다.
-- `Weapon::getType`은 `const std::string&`를 반환해 weapon type 문자열을 직접 복사하지 않고 참조한다.
-
-### `ex04` 파일 치환
-
-- 원본 파일을 직접 수정하지 않고, 입력 파일 이름에 `.replace`를 붙인 새 파일을 만든다.
-- 입력 파일과 출력 파일은 file stream으로 열고, 한 줄씩 읽어 `s1`을 찾아 `s2`로 치환한다.
-- 파일 이름, 찾을 문자열, 바꿀 문자열이 비어 있으면 잘못된 인자로 처리한다.
-
-### `ex05` Member Function Pointer
-
-- `Harl`은 `DEBUG`, `INFO`, `WARNING`, `ERROR` level에 대응하는 private member function을 가진다.
-- `complain`은 문자열과 member function pointer 배열을 비교해 일치하는 level의 함수를 호출한다.
-- 일치하는 level이 없으면 invalid level 메시지를 출력한다.
-
-## 내가 구현한 방식
-
-### `Zombie`, `newZombie`, `randomChump`
-
-- `Zombie`는 `name`을 private member로 가지고, `announce`에서 `<name>: BraiiiiiiinnnzzzZ...` 형식으로 출력한다.
-- destructor는 object가 소멸될 때 `<name> is dead`를 출력해 소멸 시점을 확인할 수 있게 한다.
-- `newZombie`는 `new Zombie(name)`으로 heap object를 만들고 pointer를 반환한다.
-- `randomChump`는 local `Zombie` object를 만들고 `announce`를 호출한다.
-
-### `zombieHorde`
-
-- `zombieHorde(int N, std::string name)`은 `N <= 0`이면 null pointer를 반환한다.
-- `new(std::nothrow) Zombie[N]`로 배열을 할당하고, 실패하면 null pointer를 반환한다.
-- 각 요소에 `SetName`으로 같은 이름을 설정한 뒤 `announce`를 호출한다.
-- 호출자는 반환된 배열을 사용한 뒤 `delete[]`로 해제한다.
-
-### `Pointer`와 `Reference` 출력
-
-- `ex02`는 `std::string A`, `std::string* stringPTR`, `std::string& stringREF`를 만든다.
-- 원본 문자열, pointer, reference의 주소를 출력하고, 이어서 각각의 값을 출력한다.
-- reference의 주소는 원본 문자열의 주소와 같은 값으로 출력된다.
-
-### `Weapon`, `HumanA`, `HumanB`
-
-- `Weapon`은 `type`을 저장하고, `getType`과 `setType`으로 값을 읽고 변경한다.
-- `HumanA`는 `Weapon& weapon`을 member로 가지고, constructor member initializer로 weapon을 초기화한다.
-- `HumanB`는 `Weapon* weapon`을 member로 가지고, constructor에서 null pointer로 초기화한 뒤 `setWeapon`으로 weapon 주소를 저장한다.
-- `attack`은 weapon이 있으면 현재 weapon type을 출력하고, `HumanB`는 weapon이 없을 때 별도 메시지를 출력한다.
-
-### `FileManager`
-
-- `FileManager`는 파일 이름, 찾을 문자열, 바꿀 문자열과 입출력 file stream을 member로 가진다.
-- `checkArg`는 파일 이름과 치환 문자열이 비어 있는지 확인한다.
-- `getFile`은 원본 파일을 열고, 출력 파일을 `<filename>.replace` 이름으로 연다.
+- **file stream**은 파일을 입력 또는 출력 대상으로 다루는 stream이다.
+- `std::ifstream`은 file input, `std::ofstream`은 file output에 사용한다.
+- `FileManager`는 원본 파일을 열고, 출력 파일을 `<filename>.replace` 이름으로 만든다.
 - `stringReplace`는 각 줄에서 `s1`을 찾아 지우고 `s2`를 삽입하는 방식으로 치환한 뒤 출력 파일에 기록한다.
-- destructor는 입출력 file stream을 닫는다.
+- 원본 파일 이름, 찾을 문자열, 바꿀 문자열이 비어 있으면 잘못된 인자로 처리한다.
 
-### `Harl`
+### Member Function Pointer
 
+- **member function pointer**는 class의 member function을 가리키는 pointer다.
+- 일반 function pointer와 달리 object와 함께 호출해야 하므로 `(this->*f[i])()` 형태를 사용한다.
 - `Harl`은 `debug`, `info`, `warning`, `error`를 private member function으로 가진다.
-- `complain`은 member function pointer 배열과 level 문자열 배열을 같은 순서로 두고, 입력 문자열과 일치하는 함수를 호출한다.
-- `main`은 네 가지 정상 level과 하나의 잘못된 level을 호출해 분기 흐름을 확인한다.
+- `complain`은 level 문자열 배열과 member function pointer 배열을 같은 순서로 두고, 입력 문자열과 일치하는 함수를 호출한다.
 
 ## 폴더 구조
 

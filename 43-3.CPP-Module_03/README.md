@@ -58,23 +58,6 @@
 > _base class pointer_: base class type으로 선언된 pointer이며, derived class object의 주소를 가리킬 수 있다.
 > pointer type은 base class이므로 base class에 정의된 member를 기준으로 접근한다.
 
-### Constructor와 Destructor
-
-- **Constructor**: object가 되기 위해 반드시 하나의 constructor가 호출되어야 한다.
-- Constructor는 object 생성 시 한 번 호출된다.
-- Constructor는 base class에서 derived class 순서로 호출된다.
-
-  ```c++
-  Fraction frac{1, 3};
-  Fraction frac(1, 3);
-  // {} 로 호출하면, 자동으로 형변환을 하지않음.
-  ```
-
-- **Destructor**: object 소멸 시 반드시 호출된다.
-- Destructor는 `~`가 붙은 형태의 이름을 가진다.
-- Destructor는 derived class에서 base class 순서로 호출된다.
-- `ScavTrap`과 `FragTrap`은 constructor에서 `ClapTrap()` 또는 `ClapTrap(name)`을 먼저 호출하고, destructor는 derived class 쪽 메시지가 먼저 출력된 뒤 `ClapTrap` destructor가 호출된다.
-
 ### ClapTrap의 상태와 Derived class 확장
 
 - `ClapTrap`은 `Name`, `Hit_points`, `Energy_points`, `Attack_damage`를 가지고 `attack`, `takeDamage`, `beRepaired`를 수행한다.

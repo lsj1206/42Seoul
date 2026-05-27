@@ -34,20 +34,13 @@
 
 ## 핵심 메모
 
-- CPP Module 03에서 다룬 개념은 다루지 않는다.
+### Deep Copy
 
-### New & Delete
-
-- **dynamic memory allocation**: runtime에 사용할 memory 공간을 할당하는 것.
-  - 상황에 따라 원하는 크기만큼의 memory를 heap에 할당한다.
-  - Heap은 사용자가 직접 관리해야 하는 memory 영역이다.
-    - Stack은 compiler에 의해 어느 정도 안정성이 보장된다.
-- `new`는 C++에서 지원하는 dynamic allocation 방식이며, `malloc`에 대응된다.
-- `delete`는 `free`에 대응되며, 할당된 memory를 해제할 때 사용한다.
-- `new`가 실패하면 기본적으로 `std::bad_alloc` 예외가 throw된다.
-  - C에서 사용하는 NULL체크로 예외처리가 불가능하다.
-- try-catch문을 통해서 예외처리할 수 있으며, `new(std::nothrow)`로 선언하면 C와 같은 방식으로(NULL 체크)로 예외처리가 가능하다.
-- `Dog`와 `Cat`은 `new Brain()`과 `delete brain`을 통해 heap에 생성한 `Brain`의 lifetime을 직접 관리한다.
+- **deep copy(깊은 복사)**는 pointer member가 가리키는 resource를 공유하지 않고, object별로 독립된 resource를 가지도록 복사하는 방식이다.
+- 얕은 복사는 pointer 값만 복사하므로 여러 object가 같은 resource를 가리킬 수 있다.
+- `Dog`와 `Cat`은 `Brain*`을 member로 가지고, constructor에서 각자 `Brain`을 만든다.
+- Copy constructor는 먼저 새 `Brain`을 만든 뒤 대입 연산자를 통해 내용을 복사한다.
+- Copy assignment operator는 `*this->brain = *copy.brain`으로 `Brain` 내부의 `ideas[100]` 값을 복사한다.
 
 ### Virtual inheritance
 
